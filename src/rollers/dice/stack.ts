@@ -643,6 +643,16 @@ export class StackRoller extends RenderableRoller<number> {
         }
         DiceRenderer.stop();
         this.children.forEach((dice) => (dice.shouldRender = false));
+        /**
+         * With an initial display of "None" or "Average", the first roll only
+         * primes the roller and its result is never shown, so it must not be
+         * logged to the Dice View. `build()` resets `expectedValue` to `Roll`,
+         * so this has to be captured before rendering.
+         */
+        const isDisplayedRoll =
+            render ||
+            this.shouldRender ||
+            this.expectedValue === ExpectedValue.Roll;
         if (render || (this.shouldRender && this.hasRunOnce)) {
             await this.renderChildren();
         } else {
@@ -661,7 +671,9 @@ export class StackRoller extends RenderableRoller<number> {
         }
 
         this.trigger("new-result");
-        this.app.workspace.trigger("dice-roller:new-result", this);
+        if (isDisplayedRoll) {
+            this.app.workspace.trigger("dice-roller:new-result", this);
+        }
         this.hasRunOnce = true;
         return this.result;
     }
