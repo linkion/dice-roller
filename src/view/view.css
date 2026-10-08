@@ -80,6 +80,19 @@
     margin: 0;
     min-width: 66px;
 }
+/* Inactive toggles are faded; the active one shows at full strength */
+.dice-roller-view
+    .dice-roller-grid
+    .advantage-disadvantage
+    button:not(.is-active) {
+    opacity: 0.45;
+}
+.dice-roller-view
+    .dice-roller-grid
+    .advantage-disadvantage
+    button:not(.is-active):hover {
+    opacity: 0.75;
+}
 
 .dice-roller-view .dice-roller-formula {
     display: flex;

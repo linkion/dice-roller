@@ -164,40 +164,32 @@ export default class DiceView extends ItemView {
         });
         const adv = new ButtonComponent(advDis)
             .setButtonText("ADV")
+            .setTooltip("Advantage")
             .onClick(() => {
                 this.#adv = !this.#adv;
                 this.#dis = false;
-
-                if (this.#adv) {
-                    adv.setCta();
-                    dis.removeCta();
-                } else {
-                    adv.removeCta();
-                }
+                syncAdvDis();
                 this.setFormula();
             });
-        if (this.#adv) {
-            adv.setCta();
-        }
         const dis = new ButtonComponent(advDis)
             .setButtonText("DIS")
+            .setTooltip("Disadvantage")
             .onClick(() => {
                 this.#dis = !this.#dis;
                 this.#adv = false;
-
-                if (this.#dis) {
-                    dis.setCta();
-                    adv.removeCta();
-                } else {
-                    dis.removeCta();
-                }
-
+                syncAdvDis();
                 this.setFormula();
             });
-
-        if (this.#dis) {
-            dis.setCta();
-        }
+        const syncAdvDis = () => {
+            for (const [button, active] of [
+                [adv, this.#adv],
+                [dis, this.#dis]
+            ] as const) {
+                button.buttonEl.toggleClass("is-active", active);
+                button.buttonEl.setAttr("aria-pressed", `${active}`);
+            }
+        };
+        syncAdvDis();
         new ExtraButtonComponent(advDis).setIcon(Icons.PLUS).onClick(() => {
             this.#add += 1;
             this.setFormula();
