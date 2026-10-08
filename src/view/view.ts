@@ -380,10 +380,7 @@ export default class DiceView extends ItemView {
         this.resultEl.prepend(resultEl);
         if (save) {
             this.plugin.data.viewResults.push(result);
-            this.plugin.data.viewResults = this.plugin.data.viewResults.slice(
-                0,
-                100
-            );
+            this.plugin.data.viewResults = this.plugin.data.viewResults.slice(-100);
             await this.plugin.saveSettings();
         }
     }
