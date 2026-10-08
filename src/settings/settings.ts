@@ -300,6 +300,20 @@ export default class SettingTab extends PluginSettingTab {
                     this.plugin.saveSettings();
                 });
             });
+        new Setting(containerEl)
+            .setName("Highlight Natural 20s in Dice Tray")
+            .setDesc(
+                "Results containing a natural 20 on a d20 will shine gold in the Dice Tray's Results section."
+            )
+            .addToggle((t) => {
+                t.setValue(this.plugin.data.highlightNatural20s).onChange(
+                    (v) => {
+                        this.plugin.data.highlightNatural20s = v;
+                        this.plugin.saveSettings();
+                        this.plugin.view?.display();
+                    }
+                );
+            });
     }
     buildTables(containerEl: HTMLDetailsElement) {
         containerEl.empty();

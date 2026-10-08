@@ -26,6 +26,7 @@ export interface DiceRollerSettings {
     renderer: boolean;
     renderAllDice: boolean;
     addToView: boolean;
+    highlightNatural20s: boolean;
     renderTime: number;
     colorfulDice: boolean;
     scaler: number;

@@ -27,6 +27,21 @@ export interface ViewResult {
     result: string | number;
     timestamp: number;
     id: string;
+    natural20?: boolean;
+}
+
+/** True if any kept (usable) d20 in the roll came up 20. */
+function hasNatural20(roller: RenderableRoller): boolean {
+    if (!(roller instanceof StackRoller)) return false;
+    return roller.dynamic.some(
+        (dice) =>
+            !dice.fudge &&
+            dice.faces.min === 1 &&
+            dice.faces.max === 20 &&
+            [...dice.results.values()].some(
+                ({ usable, value }) => usable && value === 20
+            )
+    );
 }
 
 export default class DiceView extends ItemView {
@@ -71,7 +86,8 @@ export default class DiceView extends ItemView {
                             original: roller.original,
                             resultText: roller.getTooltip(),
                             timestamp: new Date().valueOf(),
-                            id: nanoid(12)
+                            id: nanoid(12),
+                            natural20: hasNatural20(roller)
                         });
                     }
                 }
@@ -324,6 +340,10 @@ export default class DiceView extends ItemView {
             this.noResultsEl.detach();
         }
         const resultEl = createDiv("view-result");
+        if (this.plugin.data.highlightNatural20s && result.natural20) {
+            resultEl.addClass("dice-roller-natural-20");
+            if (save) resultEl.addClass("dice-roller-natural-20-new");
+        }
         const topPaneEl = resultEl.createDiv("result-actions");
         const reroll = new ExtraButtonComponent(topPaneEl)
             .setIcon(Icons.DICE)

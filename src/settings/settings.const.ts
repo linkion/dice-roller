@@ -21,6 +21,7 @@ export const DEFAULT_SETTINGS: DiceRollerSettings = {
     renderer: false,
     renderAllDice: false,
     addToView: false,
+    highlightNatural20s: false,
     renderTime: 2000,
     colorfulDice: false,
     scaler: 1,

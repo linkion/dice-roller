@@ -190,3 +190,106 @@
     stroke-linejoin: round;
     stroke-width: 15px !important;
 }
+
+/* Natural 20 highlight */
+.dice-roller-view .dice-roller-results .view-result.dice-roller-natural-20 {
+    --dice-roller-gold: #e6b422;
+    --dice-roller-gold-light: #fff1a8;
+    border-color: var(--dice-roller-gold);
+    box-shadow:
+        0 0 6px 1px rgba(230, 180, 34, 0.45),
+        inset 0 0 8px rgba(230, 180, 34, 0.2);
+    overflow: hidden;
+}
+.dice-roller-view
+    .dice-roller-results
+    .view-result.dice-roller-natural-20
+    strong {
+    color: var(--dice-roller-gold);
+    text-shadow: 0 0 6px rgba(230, 180, 34, 0.6);
+}
+
+/* One-time entrance: a bright flare and a shimmer sweep, settling into the resting glow */
+.dice-roller-view
+    .dice-roller-results
+    .view-result.dice-roller-natural-20-new {
+    animation: dice-roller-natural-20-flare 1.6s ease-out;
+}
+.dice-roller-view
+    .dice-roller-results
+    .view-result.dice-roller-natural-20-new::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        110deg,
+        transparent 30%,
+        rgba(255, 241, 168, 0.75) 50%,
+        transparent 70%
+    );
+    transform: translateX(-100%);
+    animation: dice-roller-natural-20-shimmer 1.2s ease-in-out 0.15s forwards;
+}
+.dice-roller-view
+    .dice-roller-results
+    .view-result.dice-roller-natural-20-new
+    strong {
+    animation: dice-roller-natural-20-text 1.6s ease-out;
+}
+
+@keyframes dice-roller-natural-20-flare {
+    0% {
+        transform: scale(0.96);
+        box-shadow: 0 0 0 0 rgba(230, 180, 34, 0);
+    }
+    25% {
+        transform: scale(1.03);
+        box-shadow:
+            0 0 22px 6px rgba(255, 215, 80, 0.9),
+            inset 0 0 18px rgba(255, 215, 80, 0.5);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow:
+            0 0 6px 1px rgba(230, 180, 34, 0.45),
+            inset 0 0 8px rgba(230, 180, 34, 0.2);
+    }
+}
+@keyframes dice-roller-natural-20-shimmer {
+    to {
+        transform: translateX(100%);
+    }
+}
+@keyframes dice-roller-natural-20-text {
+    0% {
+        color: var(--dice-roller-gold-light);
+        text-shadow: 0 0 2px rgba(255, 241, 168, 0);
+    }
+    25% {
+        color: var(--dice-roller-gold-light);
+        text-shadow: 0 0 14px rgba(255, 215, 80, 1);
+    }
+    100% {
+        color: var(--dice-roller-gold);
+        text-shadow: 0 0 6px rgba(230, 180, 34, 0.6);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dice-roller-view .dice-roller-results .view-result.dice-roller-natural-20-new,
+    .dice-roller-view
+        .dice-roller-results
+        .view-result.dice-roller-natural-20-new
+        strong,
+    .dice-roller-view
+        .dice-roller-results
+        .view-result.dice-roller-natural-20-new::after {
+        animation: none;
+    }
+    .dice-roller-view
+        .dice-roller-results
+        .view-result.dice-roller-natural-20-new::after {
+        display: none;
+    }
+}
